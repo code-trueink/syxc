@@ -47,7 +47,7 @@ std::vector<Token> Tokenizer::tokenize() {
 
             if (buf == "exit") {
                 current_state << "found key exit at line: " << line_count;
-                tokens.push_back({TokenType::key_exit, line_count});
+                tokens.push_back({TokenType::keywords, line_count, buf});
                 modlogs();
             } else {
                 current_state << "found varibles: " << buf << " at line: " << line_count;
@@ -91,22 +91,22 @@ std::vector<Token> Tokenizer::tokenize() {
 
         else if (*peek() == '(') {
             consume();
-            tokens.push_back({TokenType::open_bracket, line_count});
+            tokens.push_back({TokenType::paranthesis, line_count, "open"});
         }
 
         else if (*peek() == ')') {
             consume();
-            tokens.push_back({TokenType::close_bracket, line_count});
+            tokens.push_back({TokenType::paranthesis, line_count, "close"});
         }
 
         else if (*peek() == '{') {
             consume();
-            tokens.push_back({TokenType::open_curly, line_count});
+            tokens.push_back({TokenType::curly_braces, line_count, "open"});
         }
 
         else if (*peek() == '}') {
             consume();
-            tokens.push_back({TokenType::close_curly, line_count});
+            tokens.push_back({TokenType::curly_braces, line_count, "close"});
         }
 
         else if (*peek() == '\n') {

@@ -6,18 +6,17 @@
 #include <optional>
 
 enum class TokenType {
-    int_lit,
-    float_lit,
-    char_lit,
-    string_lit,
-    open_bracket,
-    close_bracket,
-    open_curly,
-    close_curly,
-    semi_colon,
-    identifier,
-    key_exit,
-    double_quotes,
+  keywords,
+  def_keywords,
+  semi_colon,
+  curly_braces,
+  paranthesis,
+  brackets,
+  string_lit,
+  int_lit,
+  float_lit,
+  char_lit,
+  identifier,
 };
 
 struct Token {

@@ -13,7 +13,7 @@ std::string tokens_to_asm(const std::vector<Token>& tokens){
     output << "global _start\n_start:\n";
     for (size_t i = 0; i < tokens.size(); i++) {
         const Token& token = tokens.at(i);
-        if (token.type == TokenType::key_exit) {
+        if (token.type == TokenType::keywords && token.value == "exit") {
             if (i + 1 < tokens.size() && tokens.at(i + 1).type == TokenType::int_lit) {
                 if (i + 2 < tokens.size() && tokens.at(i + 2).type == TokenType::semi_colon) {
                     output << "     mov rax, 60\n";
