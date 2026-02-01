@@ -30,7 +30,7 @@ $CXX $CXXFLAGS $SRC -o "$OUTPUT"
 # Check for success
 if [ $? -eq 0 ]; then
     echo "Build successful!"
-    echo "Run with: ./sysc"
+    echo "Run with: ./$OUTPUT"
 else
     echo "Build failed."
 fi
