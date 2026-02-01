@@ -3,10 +3,9 @@
 #include <string>
 #include <sstream>
 
-#include "lexer.hpp"
-#include "parser.hpp"
-#include "codegen.hpp"
-
+#include "hpp_file/lexer.hpp"
+#include "hpp_file/parser.hpp"
+#include "hpp_file/codegen.hpp"
 
 std::string tokens_to_asm(const std::vector<Token>& tokens){
     std::stringstream output;
@@ -80,9 +79,9 @@ int main(int argc, char* argv[]) {
     // Handle flags
     bool kout = false;
     for (const auto& f : flags) {
-        if (f == "-logs" || f == "-l") {
+        if (f == "--log" || f == "-l") {
             std::cout << logs << '\n';
-        } else if (f == "-kout") {
+        } else if (f == "-k" || f == "--kout") {
             kout = true;
         }
     }

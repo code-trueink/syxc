@@ -14,23 +14,23 @@ CXX=g++
 CXXFLAGS=" -Wall -Wextra -Ihpp_file"
 
 # Output binary name
-OUTPUT="sysc"
+OUTPUT="syxc"
 
 # Source files
 SRC="main.cpp cpp_file/lexer.cpp cpp_file/parser.cpp cpp_file/codegen.cpp"
 
 # Clean previous build
-echo "🧹 Cleaning old build..."
+echo "Cleaning old build..."
 rm -f "$OUTPUT"
 
 # Compile
-echo "🔧 Building project..."
+echo "Building project..."
 $CXX $CXXFLAGS $SRC -o "$OUTPUT"
 
 # Check for success
 if [ $? -eq 0 ]; then
-    echo "✅ Build successful!"
+    echo "Build successful!"
     echo "Run with: ./sysc"
 else
-    echo "❌ Build failed."
+    echo "Build failed."
 fi
