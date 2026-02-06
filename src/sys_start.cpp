@@ -2,10 +2,10 @@
 #include <fstream>
 #include <string>
 #include <sstream>
-
-#include "hpp_file/lexer.hpp"
-#include "hpp_file/parser.hpp"
-#include "hpp_file/codegen.hpp"
+#include <vector>
+#include "lexer.hpp"
+#include "parser.hpp"
+#include "codegen.hpp"
 
 std::string tokens_to_asm(const std::vector<Token>& tokens){
     std::stringstream output;
@@ -30,11 +30,6 @@ std::string tokens_to_asm(const std::vector<Token>& tokens){
 }
 
 
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <string>
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {

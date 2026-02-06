@@ -17,7 +17,9 @@ CXXFLAGS=" -Wall -Wextra -Ihpp_file"
 OUTPUT="syxc"
 
 # Source files
-SRC="main.cpp cpp_file/lexer.cpp cpp_file/parser.cpp cpp_file/codegen.cpp"
+START="src/sys_start.cpp"
+CORE="src/core/lexer.cpp src/core/parser.cpp src/core/codegen.cpp" 
+SRC="$START $CORE"
 
 # Clean previous build
 echo "Cleaning old build..."

@@ -91,28 +91,42 @@ std::vector<Token> Tokenizer::tokenize() {
 
         else if (*peek() == '(') {
             consume();
-            tokens.push_back({TokenType::paranthesis, line_count, "open"});
+            tokens.push_back({TokenType::brace, line_count, "("});
         }
 
         else if (*peek() == ')') {
             consume();
-            tokens.push_back({TokenType::paranthesis, line_count, "close"});
+            tokens.push_back({TokenType::brace, line_count, ")"});
         }
-
+        
         else if (*peek() == '{') {
             consume();
-            tokens.push_back({TokenType::curly_braces, line_count, "open"});
+            tokens.push_back({TokenType::brace, line_count, "{"});
         }
-
         else if (*peek() == '}') {
             consume();
-            tokens.push_back({TokenType::curly_braces, line_count, "close"});
+            tokens.push_back({TokenType::brace, line_count, "}"});
         }
 
-        else if (*peek() == '\n') {
+        else if (*peek() == '[') {
             consume();
-            line_count++;
+            tokens.push_back({TokenType::brace, line_count, "["});
         }
+
+        else if (*peek() == ']') {
+            consume();
+            tokens.push_back({TokenType::brace, line_count, "]"});
+        }
+
+        else if (*peek() == '.'){
+          buf.push_back(consume());
+          while (peek().has_value() && (std::isalnum(*peek()) || *peek() == '_')) {
+            buf.push_back(consume());
+          }
+          tokens.push_back({TokenType::dot_identifier, line_count, buf});
+          buf.clear();
+        }
+
 
         else if (std::isspace(*peek())) {
             consume();
@@ -120,7 +134,7 @@ std::vector<Token> Tokenizer::tokenize() {
 
         else {
             consume();
-            current_state<<"Syntax Failure: " << *peek() << " unkown sysntax";
+            current_state<<"Syntax Failure: " << *peek() << " unkown symbol";
             moderrors();
         }
     }
