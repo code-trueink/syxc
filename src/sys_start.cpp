@@ -65,6 +65,7 @@ int main(int argc, char* argv[]) {
     std::vector<Token> tokens = toker.tokenize();
     std::string logs = toker.getlogs();
 
+    
     // Write assembly
     {
         std::ofstream file(filename);
@@ -74,16 +75,16 @@ int main(int argc, char* argv[]) {
     // Handle flags
     bool kout = false;
     for (const auto& f : flags) {
-        if (f == "--log" || f == "-l") {
+        if (f == "-l") {
             std::cout << logs << '\n';
         } else if (f == "-k" || f == "--kout") {
             kout = true;
         }
     }
-
+    
     // Build commands
     std::stringstream commands;
-
+    /*
     // Assemble
     commands << "nasm -felf64 " << filename;
     system(commands.str().c_str());
@@ -95,13 +96,13 @@ int main(int argc, char* argv[]) {
     system(commands.str().c_str());
     commands.str("");
     commands.clear();
-
+    */
     // Optional cleanup
     if (!kout) {
         commands << "rm " << filename << " " << name << ".o";
         system(commands.str().c_str());
-    }
-
+    } 
+    
     return 0;
 }
 

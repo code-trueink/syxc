@@ -39,9 +39,9 @@ std::vector<Token> Tokenizer::tokenize() {
 
     while (peek().has_value()) {
 
-        if (std::isalpha(*peek())) {
+        if (std::isalpha((unsigned char)*peek())) {
             buf.push_back(consume());
-            while (peek().has_value() && std::isalnum(*peek())) {
+            while (peek().has_value() && std::isalnum((unsigned char)*peek())) {
                 buf.push_back(consume());
             }
 
@@ -57,16 +57,16 @@ std::vector<Token> Tokenizer::tokenize() {
             buf.clear();
         }
 
-        else if (std::isdigit(*peek())) {
+        else if (std::isdigit((unsigned char)*peek())) {
             bool is_float = false;
             buf.push_back(consume());
-            while (peek().has_value() && std::isdigit(*peek())) {
+            while (peek().has_value() && std::isdigit((unsigned char)*peek())) {
                 buf.push_back(consume());
             }
 
             if (peek().has_value() && *peek() == '.') {
                 buf.push_back(consume());
-                while (peek().has_value() && std::isdigit(*peek())) {
+                while (peek().has_value() && std::isdigit((unsigned char)*peek())) {
                     buf.push_back(consume());
                 }
                 is_float = true;
@@ -91,50 +91,65 @@ std::vector<Token> Tokenizer::tokenize() {
 
         else if (*peek() == '(') {
             consume();
-            tokens.push_back({TokenType::brace, line_count, "("});
+            tokens.push_back({TokenType::l_paren, line_count, "debug: ("});
         }
 
         else if (*peek() == ')') {
             consume();
-            tokens.push_back({TokenType::brace, line_count, ")"});
+            tokens.push_back({TokenType::r_paren, line_count, "debug: )"});
         }
         
         else if (*peek() == '{') {
             consume();
-            tokens.push_back({TokenType::brace, line_count, "{"});
+            tokens.push_back({TokenType::l_brace, line_count, "debug: {"});
         }
         else if (*peek() == '}') {
             consume();
-            tokens.push_back({TokenType::brace, line_count, "}"});
+            tokens.push_back({TokenType::r_brace, line_count, "debug: }"});
         }
 
         else if (*peek() == '[') {
             consume();
-            tokens.push_back({TokenType::brace, line_count, "["});
+            tokens.push_back({TokenType::l_bracket, line_count, "debug: ["});
         }
 
         else if (*peek() == ']') {
             consume();
-            tokens.push_back({TokenType::brace, line_count, "]"});
+            tokens.push_back({TokenType::r_bracket, line_count, "debug: ]"});
+        }
+        else if (*peek() == '\n'){
+          line_count++;
+          consume();
         }
 
         else if (*peek() == '.'){
-          buf.push_back(consume());
-          while (peek().has_value() && (std::isalnum(*peek()) || *peek() == '_')) {
-            buf.push_back(consume());
+          tokens.push_back({TokenType::dot, line_count, "$"});
+          consume();
+        }
+        else if (*peek() == '/' && peek(1).has_value() && *peek(1) == '/'){
+          while (peek().has_value() && !(consume() == '\n')) {}
+          line_count++;
+        }
+        else if (*peek() == '/' && peek(1).has_value() && *peek(1) == '*') {
+          consume();
+          consume();
+
+          while (peek().has_value()){
+            if (*peek() == '\n') line_count++;
+            if (*peek() == '*' && peek(1).has_value() && *peek(1) == '/'){
+              consume();
+              consume();
+              break;
+            }
+            consume();
           }
-          tokens.push_back({TokenType::dot_identifier, line_count, buf});
-          buf.clear();
         }
 
-
-        else if (std::isspace(*peek())) {
+        else if (std::isspace((unsigned char)*peek())) {
             consume();
         }
-
         else {
-            consume();
-            current_state<<"Syntax Failure: " << *peek() << " unkown symbol";
+            current_state<<"Syntax Failure: " << consume() << " unkown symbol";
             moderrors();
         }
     }

@@ -1,2 +1,8 @@
+//this is a comment
 
+/*
+
+multi-line comment
+
+*/
 exit 10;

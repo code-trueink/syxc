@@ -8,13 +8,15 @@
 enum class TokenType {
   keywords,
   semi_colon,
-  brace,
+  l_paren, r_paren,
+  l_brace, r_brace,
+  l_bracket, r_bracket,
   string_lit,
   int_lit,
   float_lit,
   char_lit,
   identifier,
-  dot_identifier,
+  dot,
 };
 
 struct Token {
