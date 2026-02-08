@@ -5,21 +5,21 @@
 #include <vector>
 #include "lexer.hpp"
 #include "parser.hpp"
-#include "codegen.hpp"
+#include "lexer.hpp"
 
-std::string tokens_to_asm(const std::vector<Token>& tokens) {
+std::string tokens_to_asm(const std::vector<lc_Token>& tokens) {
   std::stringstream output;
   output << "global _start\n_start:\n";
 
   for (size_t i = 0; i < tokens.size(); i++) {
-    const Token& token = tokens.at(i);
+    const lc_Token& token = tokens.at(i);
 
-    if (token.type == TokenType::keywords && token.value == "exit") {
+    if (token.type == lc_TokenType::keywords && token.value == "exit") {
       if (i + 1 < tokens.size() &&
-          tokens.at(i + 1).type == TokenType::int_lit) {
+          tokens.at(i + 1).type == lc_TokenType::int_lit) {
 
         if (i + 2 < tokens.size() &&
-            tokens.at(i + 2).type == TokenType::semi_colon) {
+            tokens.at(i + 2).type == lc_TokenType::semi_colon) {
 
           output << "  mov rax, 60\n";
           output << "  mov rdi, " << tokens.at(i + 1).value << "\n";
@@ -66,10 +66,10 @@ int main(int argc, char* argv[]) {
   std::string name = argv[argc - 1];
   std::string filename = "./" + name + ".asm";
 
-  // Tokenize
-  Tokenizer toker(contents);
-  std::vector<Token> tokens = toker.tokenize();
-  std::string logs = toker.getlogs();
+  // lc_Tokenize
+  lc_Tokenizer toker(contents);
+  std::vector<lc_Token> tokens = toker.lc_tokenize();
+  std::string logs = toker.lc_getlogs();
 
   // Write assembly
   {
@@ -80,9 +80,9 @@ int main(int argc, char* argv[]) {
   // Handle flags
   bool kout = false;
   for (const auto& f : flags) {
-    if (f == "-l") {
+    if (f == "-debug-log--lexer") {
       std::cout << logs << '\n';
-    } else if (f == "-k" || f == "--kout") {
+    } else if (f == "-k") {
       kout = true;
     }
   }

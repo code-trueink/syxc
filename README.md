@@ -36,14 +36,14 @@ when a feature or dev are stable, it shall get merge into main
 *Code Guide
 - Avoid using inheritance
 - Indentation: 2 spaces
+**Prefix Rules:
+- core of lexer: lc_*
+- core of parser: pc_*
+- core of codegen: cc_*
+- module of lexer: lm_* 
+- module of parser: pm_* 
+- module of codegen: cm_*
 
 EVERY single one of the header file must be put inside 'hpp_file' 
-
-
-
-
-
-
-
 
 
