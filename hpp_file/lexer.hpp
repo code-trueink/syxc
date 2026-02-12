@@ -11,12 +11,29 @@ enum class lc_TokenType {
   l_paren, r_paren,
   l_brace, r_brace,
   l_bracket, r_bracket,
+  op_equal,              // those operator that
+  op_minus, op_plus,      // start with op_* are
+  op_divide, op_modular, // normal operator
+  op_not, op_or, op_and, // ! ; || ; &&
+  //special operator
+  sop_star,      //either multiply or pointer: *
+  sop_addressof, //either 'bitwise and' or addressof: &
+  //bitwise op 
+  bop_not, bop_or, bop_rshift, bop_lshift, // ~ ; | ; >> ; <<
+  cop_equal, cop_lequal, cop_mequal, // compare operator: '==' ; '<=' ; '>='
+  cop_diff, cop_less, cop_more,      // compare operator: '!=' ; '<'  ; '>'
+  //compacted operator
+  comp_eminus, comp_emplus,
+  comp_edivide, comp_emodular,
+  comp_emultiply,
   string_lit,
   int_lit,
   float_lit,
   char_lit,
   identifier,
   dot,
+  colon,
+  ERROR,
 };
 
 struct lc_Token {
